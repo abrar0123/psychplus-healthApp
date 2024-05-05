@@ -36,6 +36,7 @@ setupReactotron({
   // log out any snapshots as they happen (this is useful for debugging but slow)
   logSnapshots: false,
 })
+import codepush from "react-native-code-push"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -66,4 +67,4 @@ function App() {
   )
 }
 
-export default App
+export default codepush(App)
