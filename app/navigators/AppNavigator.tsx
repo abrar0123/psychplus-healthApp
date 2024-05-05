@@ -70,14 +70,10 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
 
   useEffect(() => {
     const ss = setTimeout(() => {
-      console.log(" this is timout ")
       setLoading(true)
-      // navigation.navigate("Demo", { screen: "DemoShowroom" })
     }, 2000)
     return () => ss
   }, [])
-
-  console.log("loged ", loading)
 
   return (
     <AnimatedSplash
