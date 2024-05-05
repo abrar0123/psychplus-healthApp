@@ -54,8 +54,22 @@ const AppStack = observer(function AppStack() {
         </React.Fragment>
       ) : (
         <>
-          <Stack.Screen name="PreLogin" component={PreLogin} />
-          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen
+            name="PreLogin"
+            component={PreLogin}
+            options={{ headerShown: false, gestureEnabled: false, gestureDirection: "vertical" }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{
+              headerShown: false,
+              presentation: "modal",
+              animationTypeForReplace: "push",
+
+              animation: "slide_from_right",
+            }}
+          />
         </>
       )}
     </Stack.Navigator>

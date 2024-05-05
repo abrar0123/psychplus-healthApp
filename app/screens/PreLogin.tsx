@@ -1,14 +1,24 @@
-import { StyleSheet, View } from "react-native"
+import { Image, StyleSheet, View } from "react-native"
 import { Button, Text } from "../components"
 import { colors } from "../theme"
 import { useNavigation } from "@react-navigation/native"
 
 export const PreLogin = () => {
   const navigation = useNavigation()
+  const welcomeFace = require("../../assets/images/onboardingLoading.png")
+
   return (
     <View style={style.main}>
-      <Text style={style.textstyle} text="PsychPlus" preset="heading" />
-
+      <Text
+        style={{ ...style.textstyle, color: "cyan" }}
+        text="PsychPlus HealthCare"
+        preset="heading"
+      />
+      <Image
+        source={welcomeFace}
+        style={{ alignSelf: "center", marginTop: 50, height: 250 }}
+        resizeMode="contain"
+      />
       <View style={style.mainCont}>
         <Text style={style.textstyle2} text="Peace of Mind is a Plus" preset="heading" />
         <Text

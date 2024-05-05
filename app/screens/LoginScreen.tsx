@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useMemo, useRef, useState } from "react"
-import { TextInput, TextStyle, ViewStyle } from "react-native"
+import { TextInput, TextStyle, View, ViewStyle } from "react-native"
 import { Button, Icon, Screen, Text, TextField, TextFieldAccessoryProps } from "../components"
 import { useStores } from "../models"
 import { AppStackScreenProps } from "../navigators"
@@ -25,9 +25,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
   } = useStores()
 
   useEffect(() => {
-    // Here is where you could fetch credentials from keychain or storage
-    // and pre-fill the form fields.
-    setAuthEmail("ignite@infinite.red")
+    setAuthEmail("abc@gmail.com")
     setAuthPassword("ign1teIsAwes0m3")
   }, [])
 
@@ -41,13 +39,10 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
       return
     }
 
-    // Make a request to your server to get an authentication token.
-    // If successful, reset the fields and set the token.
     setIsSubmitted(false)
     setAuthPassword("")
     setAuthEmail("")
 
-    // We'll mock this with a fake token.
     setAuthToken(String(Date.now()))
   }
 
@@ -81,10 +76,9 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
       safeAreaEdges={["top", "bottom"]}
     >
       <Text testID="login-heading" text="Psych Plus" preset="heading" style={$signIn} />
-      <Text testID="login-heading" text="Sign In" preset="subheading" style={$signIn} />
-
+      <Text testID="login-heading" text="Sign In" preset="heading" style={$signIn} />
       <Text
-        text="Enter your details below to unlock top secret info. You'll never guess what we've got waiting. Or maybe you will; it's not rocket science here."
+        text="Hi! Welcome bacpk, you've been missed"
         preset="subheading"
         style={$enterDetails}
       />
@@ -96,9 +90,8 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
           style={$hint}
         />
       )}
-
       <TextField
-        value={authEmail}
+        // value={authEmail}
         onChangeText={setAuthEmail}
         containerStyle={$textField}
         autoCapitalize="none"
@@ -106,12 +99,11 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         autoCorrect={false}
         keyboardType="email-address"
         label="Email"
-        placeholder="Enter your email address"
+        placeholder={authEmail}
         helper={errors?.authEmail}
         status={errors?.authEmail ? "error" : undefined}
         onSubmitEditing={() => authPasswordInput.current?.focus()}
       />
-
       <TextField
         ref={authPasswordInput}
         value={authPassword}
@@ -128,14 +120,18 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         onSubmitEditing={login}
         RightAccessory={PasswordRightAccessory}
       />
-
+      <Text style={{ color: colors.blue, textAlign: "right" }} text="Forgot Password? " />
       <Button
         testID="login-button"
-        text="Tap to sign in!"
+        text="Sign In"
         style={$tapButton}
         preset="reversed"
         onPress={login}
       />
+      <View style={$second}>
+        <Text style={{}} text="Don't have an account? " preset="subheading" />
+        <Text style={{ color: colors.palette.accent300, fontWeight: "bold" }} text="  sign up" />
+      </View>
     </Screen>
   )
 })
@@ -143,6 +139,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
 const $screenContentContainer: ViewStyle = {
   paddingVertical: spacing.huge,
   paddingHorizontal: spacing.large,
+  backgroundColor: "white",
   flex: 1,
   // alignItems: "center",
 }
@@ -151,9 +148,16 @@ const $signIn: TextStyle = {
   marginBottom: spacing.small,
   alignSelf: "center",
 }
+const $second: ViewStyle = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexDirection: "row",
+}
 
 const $enterDetails: TextStyle = {
   marginBottom: spacing.large,
+  color: colors.gray,
 }
 
 const $hint: TextStyle = {
@@ -163,10 +167,14 @@ const $hint: TextStyle = {
 
 const $textField: ViewStyle = {
   marginBottom: spacing.large,
+  marginTop: 10,
 }
 
 const $tapButton: ViewStyle = {
-  marginTop: spacing.extraSmall,
+  // marginTop: spacing.large,
+  borderRadius: 30,
+  marginVertical: 50,
+  backgroundColor: colors.blue,
 }
 
 // @demo remove-file
