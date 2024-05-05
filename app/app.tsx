@@ -60,7 +60,6 @@ function App() {
             initialState={initialNavigationState}
             onStateChange={onNavigationStateChange}
           />
-          {/* <SplashScreen /> */}
         </ErrorBoundary>
       </SafeAreaProvider>
     </>

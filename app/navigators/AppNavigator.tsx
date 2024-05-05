@@ -16,8 +16,9 @@ import {
 } from "../screens"
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remove-current-line
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
-import { Home } from "../screens/Home"
+import { HomeScreen } from "../screens/HomeScreen"
 import AnimatedSplash from "react-native-animated-splash-screen"
+import { PreLogin } from "../screens/PreLogin"
 
 export type AppStackParamList = {
   Welcome: undefined
@@ -43,16 +44,17 @@ const AppStack = observer(function AppStack() {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName={isAuthenticated ? "Home" : "Login"} // @demo remove-current-line
+      initialRouteName={isAuthenticated ? "HomeScreen" : "PreLogin"} // @demo remove-current-line
       // initialRouteName={"Home"}
     >
       {isAuthenticated ? (
         <React.Fragment>
-          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Home" component={HomeScreen} />
           {/* <Stack.Screen name="Demo" component={DemoNavigator} /> */}
         </React.Fragment>
       ) : (
         <>
+          <Stack.Screen name="PreLogin" component={PreLogin} />
           <Stack.Screen name="Login" component={LoginScreen} />
         </>
       )}
@@ -78,6 +80,7 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
   return (
     <AnimatedSplash
       isLoaded={loading}
+      translucent={true}
       logoImage={welcomeFace}
       backgroundColor={"white"}
       logoWidth={300}

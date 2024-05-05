@@ -80,7 +80,9 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
       contentContainerStyle={$screenContentContainer}
       safeAreaEdges={["top", "bottom"]}
     >
-      <Text testID="login-heading" text="Sign In" preset="heading" style={$signIn} />
+      <Text testID="login-heading" text="Psych Plus" preset="heading" style={$signIn} />
+      <Text testID="login-heading" text="Sign In" preset="subheading" style={$signIn} />
+
       <Text
         text="Enter your details below to unlock top secret info. You'll never guess what we've got waiting. Or maybe you will; it's not rocket science here."
         preset="subheading"
@@ -141,10 +143,13 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
 const $screenContentContainer: ViewStyle = {
   paddingVertical: spacing.huge,
   paddingHorizontal: spacing.large,
+  flex: 1,
+  // alignItems: "center",
 }
 
 const $signIn: TextStyle = {
   marginBottom: spacing.small,
+  alignSelf: "center",
 }
 
 const $enterDetails: TextStyle = {
