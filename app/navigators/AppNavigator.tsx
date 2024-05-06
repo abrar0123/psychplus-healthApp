@@ -19,6 +19,7 @@ import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { HomeScreen } from "../screens/HomeScreen"
 import AnimatedSplash from "react-native-animated-splash-screen"
 import { PreLogin } from "../screens/PreLogin"
+import { VideoCalling } from "../screens/VideoCalling"
 
 export type AppStackParamList = {
   Welcome: undefined
@@ -50,6 +51,8 @@ const AppStack = observer(function AppStack() {
       {/* {isAuthenticated ? ( */}
       <React.Fragment>
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="VideoCalling" component={VideoCalling} />
+
         {/* <Stack.Screen name="Demo" component={DemoNavigator} /> */}
       </React.Fragment>
       {/* ) : (
