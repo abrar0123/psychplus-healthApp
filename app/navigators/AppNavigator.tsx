@@ -44,15 +44,15 @@ const AppStack = observer(function AppStack() {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName={isAuthenticated ? "HomeScreen" : "PreLogin"} // @demo remove-current-line
-      // initialRouteName={"Home"}
+      // initialRouteName={isAuthenticated ? "HomeScreen" : "PreLogin"} // @demo remove-current-line
+      initialRouteName={"Home"}
     >
-      {isAuthenticated ? (
-        <React.Fragment>
-          <Stack.Screen name="Home" component={HomeScreen} />
-          {/* <Stack.Screen name="Demo" component={DemoNavigator} /> */}
-        </React.Fragment>
-      ) : (
+      {/* {isAuthenticated ? ( */}
+      <React.Fragment>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        {/* <Stack.Screen name="Demo" component={DemoNavigator} /> */}
+      </React.Fragment>
+      {/* ) : (
         <>
           <Stack.Screen
             name="PreLogin"
@@ -71,7 +71,7 @@ const AppStack = observer(function AppStack() {
             }}
           />
         </>
-      )}
+      )} */}
     </Stack.Navigator>
   )
 })
