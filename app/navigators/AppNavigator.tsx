@@ -8,7 +8,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
 import React, { useEffect, useState } from "react"
-import { useColorScheme } from "react-native"
+import { Touchable, useColorScheme, TouchableOpacity } from "react-native"
 import Config from "../config"
 import { useStores } from "../models" // @demo remove-current-line
 import {
@@ -20,6 +20,7 @@ import { HomeScreen } from "../screens/HomeScreen"
 import AnimatedSplash from "react-native-animated-splash-screen"
 import { PreLogin } from "../screens/PreLogin"
 import { Appointment } from "../screens/Appointment"
+import { Text } from "../components"
 
 export type AppStackParamList = {
   Welcome: undefined
@@ -44,14 +45,33 @@ const AppStack = observer(function AppStack() {
 
   return (
     <Stack.Navigator
-      screenOptions={{ headerShown: false }}
+      screenOptions={{}}
       // initialRouteName={isAuthenticated ? "HomeScreen" : "PreLogin"} // @demo remove-current-line
       initialRouteName={"Home"}
     >
       {/* {isAuthenticated ? ( */}
       <React.Fragment>
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Appointment" component={Appointment} />
+        <Stack.Screen
+          name="Appointment"
+          component={Appointment}
+          options={{
+            headerShown: true,
+            headerStyle: { backgroundColor: "orange" },
+            headerBackTitle: "Back",
+            headerTintColor: "green",
+            title: "sample",
+            headerBackTitleStyle: { fontSize: 22 },
+            headerRight: () => (
+              <TouchableOpacity
+                style={{ padding: 8 }}
+                onPress={() => console.log("Button Pressed")}
+              >
+                <Text text="Info" preset="subheading" />
+              </TouchableOpacity>
+            ),
+          }}
+        />
 
         {/* <Stack.Screen name="Demo" component={DemoNavigator} /> */}
       </React.Fragment>

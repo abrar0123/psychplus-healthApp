@@ -9,7 +9,7 @@ import { useNavigation } from "@react-navigation/native"
 export const HomeScreen = () => {
   const [mindex, setIndex] = useState(0)
   const [selected, setSelected] = useState("")
-  const [isdisplay, setIsDisplay] = useState(true)
+  const [isdisplay, setIsDisplay] = useState(false)
   const navigation = useNavigation()
 
   const dataHor = [

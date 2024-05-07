@@ -1,50 +1,60 @@
 import { FlatList, Platform, StyleSheet, TouchableOpacity, View } from "react-native"
-import { Text } from "../components"
-import { useState } from "react"
+import { Button, Text } from "../components"
+import { useEffect, useState } from "react"
 import { colors } from "../theme"
 
-export const Appointment = () => {
+const dataHor = [
+  {
+    id: 100,
+    title: "Tue 07",
+    name: "One drive hospital",
+    img: require("../../assets/images/hotel1.jpeg"),
+  },
+  {
+    id: 200,
+    title: "Wed 08",
+    name: "AKG hospital",
+    img: require("../../assets/images/hotel2.webp"),
+  },
+  {
+    id: 300,
+    title: "Thurs 08",
+    name: "two ne hospital",
+    img: require("../../assets/images/hotel3.jpg"),
+  },
+  {
+    id: 400,
+    title: "Sat 10",
+    name: "One hospital",
+    img: require("../../assets/images/hotel4.jpg"),
+  },
+  {
+    id: 400,
+    title: "Sun 11",
+    name: "One hospital",
+    img: require("../../assets/images/hotel4.jpg"),
+  },
+  {
+    id: 400,
+    title: "Mon 12",
+    name: "One hospital",
+    img: require("../../assets/images/hotel4.jpg"),
+  },
+]
+export const Appointment = ({ navigation }) => {
   const date = new Date()
   const [mindex, setIndex] = useState(0)
 
-  const dataHor = [
-    {
-      id: 100,
-      title: "Tue 07",
-      name: "One drive hospital",
-      img: require("../../assets/images/hotel1.jpeg"),
-    },
-    {
-      id: 200,
-      title: "Wed 08",
-      name: "AKG hospital",
-      img: require("../../assets/images/hotel2.webp"),
-    },
-    {
-      id: 300,
-      title: "Thurs 08",
-      name: "two ne hospital",
-      img: require("../../assets/images/hotel3.jpg"),
-    },
-    {
-      id: 400,
-      title: "Sat 10",
-      name: "One hospital",
-      img: require("../../assets/images/hotel4.jpg"),
-    },
-    {
-      id: 400,
-      title: "Sun 11",
-      name: "One hospital",
-      img: require("../../assets/images/hotel4.jpg"),
-    },
-    {
-      id: 400,
-      title: "Mon 12",
-      name: "One hospital",
-      img: require("../../assets/images/hotel4.jpg"),
-    },
-  ]
+  // ***************** apply logic of btn pressing *****************
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity style={{ padding: 8 }} onPress={() => console.log("Button Pressed")}>
+          <Text text="Info" style={{ color: "white" }} preset="subheading" />
+        </TouchableOpacity>
+      ),
+    })
+  }, [navigation])
 
   const renderHor = ({ item, index }) => {
     return (
@@ -76,7 +86,12 @@ export const Appointment = () => {
           justifyContent: "space-between",
         }}
       >
-        <Text style={styles.mainTitle} text="Select Date" preset="subheading" />
+        <Text
+          style={styles.mainTitle}
+          // onPress={() => navigation.goBack()}
+          text="Select Date"
+          preset="subheading"
+        />
         <Text
           style={{ ...styles.mainTitle, borderBottomColor: "white" }}
           text={` ${date.getMonth() + 1} - ${date.getFullYear()} `}
