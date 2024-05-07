@@ -46,7 +46,7 @@ export const colors = {
   palette,
   blue100: "#cfe2f3",
   blue200: "#79b7fb",
-  blue: "#0b5394",
+  blue: "darkblue",
   gray: "#bcbcbc",
   /**
    * A helper for making something see-thru.

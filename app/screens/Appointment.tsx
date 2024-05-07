@@ -1,7 +1,22 @@
-import { FlatList, Platform, StyleSheet, TouchableOpacity, View } from "react-native"
+import {
+  FlatList,
+  LayoutChangeEvent,
+  Platform,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native"
 import { Button, Text } from "../components"
 import { useEffect, useState } from "react"
 import { colors } from "../theme"
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withDecay,
+  withSpring,
+  withTiming,
+} from "react-native-reanimated"
+import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler"
 
 const dataHor = [
   {
@@ -41,11 +56,37 @@ const dataHor = [
     img: require("../../assets/images/hotel4.jpg"),
   },
 ]
+
 export const Appointment = ({ navigation }) => {
   const date = new Date()
   const [mindex, setIndex] = useState(0)
+  const width = useSharedValue(100)
+  const [animatedWidth, setAnimatedWidth] = useState(width.value)
+  const pressed = useSharedValue<boolean>(false)
 
-  // ***************** apply logic of btn pressing *****************
+  const offset = useSharedValue<number>(0)
+
+  const onLayout = (event: LayoutChangeEvent) => {
+    width.value = event.nativeEvent.layout.width
+  }
+
+  const pan = Gesture.Pan()
+    .onChange((event) => {
+      offset.value += event.changeX
+    })
+    .onFinalize((event) => {
+      offset.value = withDecay({
+        velocity: event.velocityX,
+        rubberBandEffect: true,
+        clamp: [-(width.value / 2) + 100 / 2, width.value / 2 - 100 / 2],
+      })
+    })
+
+  const animatedStyles = useAnimatedStyle(() => ({
+    transform: [{ translateX: offset.value }],
+  }))
+
+  // ***************** apply logic of manage navigation button  *****************
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -55,6 +96,17 @@ export const Appointment = ({ navigation }) => {
       ),
     })
   }, [navigation])
+
+  const handlePress = (anm) => {
+    if (anm === "plus") {
+      width.value = width.value + 20
+    } else {
+      width.value = width.value - 20
+    }
+    if (width.value > 20) {
+      setAnimatedWidth(width.value)
+    }
+  }
 
   const renderHor = ({ item, index }) => {
     return (
@@ -77,7 +129,6 @@ export const Appointment = ({ navigation }) => {
   return (
     <View style={styles.main}>
       <Text text="Book Appointmet " preset="heading" />
-
       <View
         style={{
           display: "flex",
@@ -105,7 +156,15 @@ export const Appointment = ({ navigation }) => {
         data={dataHor}
         renderItem={renderHor}
       />
-      <View
+      <GestureHandlerRootView style={styles.container}>
+        <View onLayout={onLayout} style={styles.wrapper}>
+          <GestureDetector gesture={pan}>
+            <Animated.View style={[styles.box, animatedStyles]} />
+          </GestureDetector>
+        </View>
+      </GestureHandlerRootView>
+
+      {/* <View
         style={{
           display: "flex",
           alignItems: "center",
@@ -116,7 +175,7 @@ export const Appointment = ({ navigation }) => {
         }}
       >
         <Text text="No Data Founded" />
-      </View>
+      </View> */}
     </View>
   )
 }
@@ -128,6 +187,27 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     // alignItems: "center",
     paddingHorizontal: 15,
+  },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100%",
+  },
+  wrapper: {
+    flex: 1,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  box: {
+    height: 120,
+    width: 120,
+    backgroundColor: "#b58df1",
+    borderRadius: 20,
+    cursor: "grab",
+    alignItems: "center",
+    justifyContent: "center",
   },
   mainTitle: {
     paddingTop: 10,
