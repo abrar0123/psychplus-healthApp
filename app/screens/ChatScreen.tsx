@@ -83,8 +83,11 @@ const ChatScreen = () => {
           width: "45%",
           height: 50,
           padding: 10,
-          borderRadius: 3,
-          backgroundColor: colors.blue200,
+          borderRadius: 5,
+          shadowOpacity: 0.1,
+          shadowColor: "gray",
+          elevation: 7,
+          backgroundColor: colors.palette.accent500,
           marginBottom: 10,
         }}
         onPress={hanlePress}
