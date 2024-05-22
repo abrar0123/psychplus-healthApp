@@ -12,22 +12,16 @@ import { io } from "socket.io-client"
 import { useEffect, useState } from "react"
 
 const ChatScreen = ({ route }) => {
-  const { data } = route.params
-  console.log("data log ", data)
+  const { name } = route.params.data
+  const [buid, setBuid] = useState("")
+  const [otherUsers, setOtherUsers] = useState([])
 
-  const socket = io("http://192.168.250.154:5566/") // just connect backend socket port
+  // const socket = io("http://192.168.250.154:5566/") // just connect backend socket port
+  const socket = io("http://192.168.18.76:5566/") // just connect backend socket port
 
-  const [messages, setMessages] = useState([
-    { id: "1", text: "Hello!", sender: "other" },
-    { id: "2", text: "Hi, how are you?", sender: "me" },
-  ])
+  const [messages, setMessages] = useState([{}])
   const [inputText, setInputText] = useState("")
-
-  const sendMessage = () => {
-    if (inputText.trim() === "") return
-    setMessages([...messages, { id: Date.now().toString(), text: inputText, sender: "me" }])
-    setInputText("")
-  }
+  const [otherSocketId, setOtherSocketId] = useState("")
 
   const renderItem = ({ item }) => (
     <View
@@ -37,29 +31,51 @@ const ChatScreen = ({ route }) => {
     </View>
   )
 
+  console.log("messages : ", messages)
+
   useEffect(() => {
-    socket.on("connect", () => {
-      console.log("sockect connect >>> ", socket.id)
+    console.log("render ")
+
+    socket.on("connect", () => {})
+
+    socket.on("otherchat", (item) => {
+      console.log("otherchat chat success : ", item)
+      setMessages((prev) => [...prev, item])
     })
-    socket.on("chatRec", (data) => {
-      console.log("chatRec", data)
+
+    socket.on("OtherUsers", (users) => {
+      // console.log("otherusers", users)
+      setOtherUsers(users)
     })
+
+    socket.on("otherchat", (data) => {
+      console.log("other User chat : ", data)
+    })
+
+    const registerUser = () => {
+      try {
+        const data = { sid: socket.id, name }
+
+        socket.emit("register", data, (res) => {
+          setBuid(res.uid)
+        })
+      } catch (error) {}
+    }
+    registerUser()
   }, [])
 
-  const hanlePress = async () => {
-    console.log("pressed")
-
+  const handlePress = async () => {
     try {
-      const response = await fetch("http://192.168.250.154:5566/")
-      const result = await response.json()
+      // const response = await fetch("http://192.168.250.154:5566/")
+      if (inputText.trim() === "") return
+      // setMessages([{ id: Date.now().toString(), text: inputText, sender: "me" }, ...messages])
+      setInputText("")
+      const data = { otherSocketId, uname: name, chat: inputText }
 
-      console.log("result :", result)
-
-      const data = { id: 1002, chat: "how are u" }
-      const ss = socket.emit("chat", data)
-      console.log("socket chat")
+      socket.emit("chat", data)
+      // console.log("Socket Chat", data)
     } catch (error) {
-      socket.emit("chat error", error)
+      console.log("Chat Error", error)
     }
   }
 
@@ -72,6 +88,15 @@ const ChatScreen = ({ route }) => {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={90}
       >
+        <TextInput
+          style={styles.input1}
+          value={otherSocketId}
+          onChangeText={setOtherSocketId}
+          placeholder="Type a message"
+        />
+        {messages.map((e) => (
+          <Text text={`A :${e.chat}`} />
+        ))}
         <FlatList
           data={messages}
           renderItem={renderItem}
@@ -86,7 +111,7 @@ const ChatScreen = ({ route }) => {
             onChangeText={setInputText}
             placeholder="Type a message"
           />
-          <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
+          <TouchableOpacity style={styles.sendButton} onPress={handlePress}>
             <Text style={styles.sendButtonText}>Send</Text>
           </TouchableOpacity>
         </View>
@@ -129,18 +154,29 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
   },
   input: {
-    flex: 1,
+    // flex: 1,
     borderWidth: 1,
     borderColor: "#ECECEC",
     borderRadius: 25,
     paddingHorizontal: 15,
     fontSize: 16,
   },
+  input1: {
+    // flex: 1,
+    borderWidth: 1,
+    marginTop: 20,
+    marginHorizontal: 20,
+    borderColor: "black",
+    borderRadius: 5,
+    paddingHorizontal: 15,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
   sendButton: {
     marginLeft: 10,
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 15,
+    paddingHorizontal: 25,
     backgroundColor: "#34B7F1",
     borderRadius: 25,
   },

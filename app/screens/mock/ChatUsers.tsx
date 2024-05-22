@@ -7,19 +7,19 @@ const dataHor = [
   {
     id: "0239KSJDKSK003",
     title: "Tue 07",
-    name: "akram ali",
+    name: "SamsungA50",
     img: require("../../../assets/images/hotel1.jpeg"),
   },
   {
     id: "0239KSJDKSOWE3",
     title: "Wed 08",
-    name: "wajid khan",
+    name: "InfinixZero30",
     img: require("../../../assets/images/hotel2.webp"),
   },
   {
     id: "0239KSJKSJDDSWE3",
     title: "Thurs 08",
-    name: "dola kareem",
+    name: "SamsungA501",
     img: require("../../../assets/images/hotel3.jpg"),
   },
   {
@@ -46,9 +46,7 @@ const ChatUsers = () => {
   const nav = useNavigation()
 
   const handlePress = (item) => {
-    console.log("data sends >>> ", item)
-
-    nav.navigate("Chat", { data: item.id })
+    nav.navigate("Chat", { data: item })
   }
   const renderVert = ({ item, index }) => {
     return (
