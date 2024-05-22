@@ -18,6 +18,7 @@ import Animated, {
 } from "react-native-reanimated"
 import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler"
 import ChatScreen from "./ChatScreen"
+import ChatUsers from "./mock/ChatUsers"
 
 const dataHor = [
   {
@@ -157,7 +158,7 @@ export const Appointment = ({ navigation }) => {
         data={dataHor}
         renderItem={renderHor}
       />
-      <ChatScreen />
+      <ChatUsers />
       {/* <GestureHandlerRootView style={styles.container}>
         <View onLayout={onLayout} style={styles.wrapper}>
           <GestureDetector gesture={pan}>

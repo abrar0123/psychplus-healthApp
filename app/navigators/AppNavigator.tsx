@@ -8,7 +8,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
 import React, { useEffect, useState } from "react"
-import { Touchable, useColorScheme, TouchableOpacity } from "react-native"
+import { Touchable, useColorScheme, TouchableOpacity, Image } from "react-native"
 import Config from "../config"
 import { useStores } from "../models" // @demo remove-current-line
 import {
@@ -20,7 +20,9 @@ import { HomeScreen } from "../screens/HomeScreen"
 import AnimatedSplash from "react-native-animated-splash-screen"
 import { PreLogin } from "../screens/PreLogin"
 import { Appointment } from "../screens/Appointment"
-import { Text } from "../components"
+import { Icon, Text } from "../components"
+import ChatUsers from "../screens/mock/ChatUsers"
+import ChatScreen from "../screens/ChatScreen"
 
 export type AppStackParamList = {
   Welcome: undefined
@@ -47,11 +49,35 @@ const AppStack = observer(function AppStack() {
     <Stack.Navigator
       screenOptions={{}}
       // initialRouteName={isAuthenticated ? "HomeScreen" : "PreLogin"} // @demo remove-current-line
-      initialRouteName={"Home"}
+      initialRouteName={"ChatUsers"}
     >
       {/* {isAuthenticated ? ( */}
       <React.Fragment>
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen
+          name="ChatUsers"
+          component={ChatUsers}
+          options={{
+            headerStyle: { backgroundColor: "white" },
+            title: "Messages",
+            headerLeft: () => (
+              <Image
+                source={require("../../assets/images/account.png")}
+                style={{ height: 35, width: 35, borderRadius: 40, marginRight: 15 }}
+              />
+            ),
+            headerRight: () => (
+              <TouchableOpacity>
+                <Image
+                  source={require("../../assets/images/add.png")}
+                  style={{ height: 40, width: 40 }}
+                />
+              </TouchableOpacity>
+            ),
+          }}
+        />
+        <Stack.Screen name="Chat" component={ChatScreen} />
+
         <Stack.Screen
           name="Appointment"
           component={Appointment}
