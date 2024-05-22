@@ -11,7 +11,10 @@ import { Text } from "../components"
 import { io } from "socket.io-client"
 import { useEffect, useState } from "react"
 
-const ChatScreen = () => {
+const ChatScreen = ({ route }) => {
+  const { data } = route.params
+  console.log("data log ", data)
+
   const socket = io("http://192.168.250.154:5566/") // just connect backend socket port
 
   const [messages, setMessages] = useState([
