@@ -57,9 +57,9 @@ const AppStack = observer(function AppStack() {
           component={Appointment}
           options={{
             headerShown: true,
-            headerStyle: { backgroundColor: "orange" },
+            headerStyle: { backgroundColor: "red" },
             headerBackTitle: "Back",
-            headerTintColor: "green",
+            headerTintColor: "white",
             title: "sample",
             headerBackTitleStyle: { fontSize: 22 },
             headerRight: () => (

@@ -17,42 +17,43 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated"
 import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler"
+import ChatScreen from "./ChatScreen"
 
 const dataHor = [
   {
     id: 100,
     title: "Tue 07",
-    name: "One drive hospital",
+    name: "akram ali",
     img: require("../../assets/images/hotel1.jpeg"),
   },
   {
     id: 200,
     title: "Wed 08",
-    name: "AKG hospital",
+    name: "wajid khan",
     img: require("../../assets/images/hotel2.webp"),
   },
   {
     id: 300,
     title: "Thurs 08",
-    name: "two ne hospital",
+    name: "dola akr",
     img: require("../../assets/images/hotel3.jpg"),
   },
   {
     id: 400,
     title: "Sat 10",
-    name: "One hospital",
+    name: "shafqt",
     img: require("../../assets/images/hotel4.jpg"),
   },
   {
     id: 400,
     title: "Sun 11",
-    name: "One hospital",
+    name: "nope e",
     img: require("../../assets/images/hotel4.jpg"),
   },
   {
     id: 400,
     title: "Mon 12",
-    name: "One hospital",
+    name: "ali ahmed",
     img: require("../../assets/images/hotel4.jpg"),
   },
 ]
@@ -116,7 +117,7 @@ export const Appointment = ({ navigation }) => {
           margin: 10,
           padding: 8,
           borderRadius: 3,
-          backgroundColor: index == mindex ? colors.blue200 : "white",
+          backgroundColor: index == mindex ? colors.blue200 : colors.blue100,
           marginBottom: 20,
         }}
         onPress={() => setIndex(index)}
@@ -156,13 +157,14 @@ export const Appointment = ({ navigation }) => {
         data={dataHor}
         renderItem={renderHor}
       />
-      <GestureHandlerRootView style={styles.container}>
+      <ChatScreen />
+      {/* <GestureHandlerRootView style={styles.container}>
         <View onLayout={onLayout} style={styles.wrapper}>
           <GestureDetector gesture={pan}>
             <Animated.View style={[styles.box, animatedStyles]} />
           </GestureDetector>
         </View>
-      </GestureHandlerRootView>
+      </GestureHandlerRootView> */}
 
       {/* <View
         style={{
