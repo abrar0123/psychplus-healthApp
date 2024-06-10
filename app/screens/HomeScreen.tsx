@@ -5,6 +5,8 @@ import { useMemo, useState } from "react"
 import { Calendar, LocaleConfig } from "react-native-calendars"
 import { AppModel } from "../components/AppModel"
 import { useNavigation } from "@react-navigation/native"
+import { FlexWidget, TextWidget } from "react-native-android-widget"
+import { WidgetPreview } from "react-native-android-widget"
 
 export const HomeScreen = () => {
   const [mindex, setIndex] = useState(0)
@@ -131,9 +133,32 @@ export const HomeScreen = () => {
           />
         </View>
         <FlatList data={dataHor} renderItem={renderVert} numColumns={2} />
-        <View style={styles.container1}>
-          <Text style={styles.text1} text="Home screen" preset="heading" />
+        <View style={styles.container}>
+          {/* <WidgetPreview renderWidget={() => <HelloWidget />} width={320} height={200} /> */}
         </View>
+        {/* p1 */}
+        <FlexWidget
+          style={{
+            height: "match_parent",
+            width: "match_parent",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "#ffffff",
+            borderRadius: 16,
+          }}
+        >
+          <TextWidget
+            text="Hello"
+            style={{
+              fontSize: 32,
+              fontFamily: "Inter",
+              color: "#000000",
+            }}
+          />
+        </FlexWidget>
+        {/* <View style={styles.container1}>
+          <Text style={styles.text1} text="Home screen test" preset="heading" />
+        </View> */}
       </View>
     </ScrollView>
   )
@@ -146,6 +171,11 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     paddingHorizontal: 10,
     marginBottom: 30,
+  },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
   container1: {
     height: 200,

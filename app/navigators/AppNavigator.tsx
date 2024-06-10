@@ -23,6 +23,7 @@ import { Appointment } from "../screens/Appointment"
 import { Icon, Text } from "../components"
 import ChatUsers from "../screens/mock/ChatUsers"
 import ChatScreen from "../screens/ChatScreen"
+import { WidgetScreen } from "../screens/WidgetScreen"
 
 export type AppStackParamList = {
   Welcome: undefined
@@ -49,11 +50,14 @@ const AppStack = observer(function AppStack() {
     <Stack.Navigator
       screenOptions={{}}
       // initialRouteName={isAuthenticated ? "HomeScreen" : "PreLogin"} // @demo remove-current-line
-      initialRouteName={"ChatUsers"}
+      // initialRouteName={"ChatUsers"}
+      initialRouteName={"widget"}
     >
       {/* {isAuthenticated ? ( */}
       <React.Fragment>
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="widget" component={WidgetScreen} />
+
         <Stack.Screen
           name="ChatUsers"
           component={ChatUsers}
