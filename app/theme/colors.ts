@@ -48,6 +48,9 @@ export const colors = {
   blue200: "#79b7fb",
   blue: "darkblue",
   gray: "#bcbcbc",
+  grey100: "#d4d3d3",
+  grey50: "#eeeeee",
+
   /**
    * A helper for making something see-thru.
    */

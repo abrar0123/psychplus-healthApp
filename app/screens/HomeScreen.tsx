@@ -1,4 +1,13 @@
-import { FlatList, Image, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native"
+import {
+  FlatList,
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  TouchableHighlight,
+  Pressable,
+} from "react-native"
 import { SearchDoctors, Text } from "../components"
 import { colors } from "../theme"
 import { useMemo, useState } from "react"
@@ -92,10 +101,15 @@ export const HomeScreen = () => {
       </TouchableOpacity>
     )
   }
+
   return (
     <ScrollView>
       <View style={styles.main}>
-        <SearchDoctors />
+        {/* p1 */}
+
+        <Pressable style={styles.searchStyle} onPress={() => navigation.navigate("SearchDoctor")}>
+          <Text text="search for doctor" />
+        </Pressable>
         {/*  ******* Use For Booking Appointment **********  */}
 
         <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
@@ -162,6 +176,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 15,
   },
+  searchStyle: {
+    backgroundColor: colors.grey50,
+    height: 45,
+    padding: 10,
+    borderRadius: 10,
+  },
   text1: {
     color: "white",
     textAlign: "center",
@@ -180,11 +200,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 3,
-    marginVertical: 4,
+    marginVertical: 3,
     padding: 10,
     borderRadius: 3,
+    paddingVertical: 15,
     shadowOpacity: 0.1,
-    shadowColor: "lightgrey",
+    shadowColor: "grey",
     elevation: 15,
     // borderWidth: 1,
     // borderColor: "gold",

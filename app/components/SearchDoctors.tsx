@@ -3,8 +3,7 @@ import { View } from "react-native"
 import { Text } from "./Text"
 import { TextField } from "./TextField"
 
-export const SearchDoctors = () => {
-  const [searchDoctor, setSerchDoctor] = useState("")
+export const SearchDoctors = ({ searchDoctor, setSerchDoctor }) => {
   return (
     <View>
       <TextField

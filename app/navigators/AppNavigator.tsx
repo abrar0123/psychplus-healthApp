@@ -24,6 +24,7 @@ import { Icon, Text } from "../components"
 import ChatUsers from "../screens/mock/ChatUsers"
 import ChatScreen from "../screens/ChatScreen"
 import { colors } from "../theme"
+import { SearchDoctor } from "../screens/SearchDoctor"
 
 export type AppStackParamList = {
   Welcome: undefined
@@ -96,6 +97,11 @@ const AppStack = observer(function AppStack() {
           }}
         />
         <Stack.Screen name="Chat" component={ChatScreen} />
+        <Stack.Screen
+          name="SearchDoctor"
+          options={{ headerShown: false }}
+          component={SearchDoctor}
+        />
 
         <Stack.Screen
           name="Appointment"
