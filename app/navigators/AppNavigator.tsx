@@ -23,6 +23,7 @@ import { Appointment } from "../screens/Appointment"
 import { Icon, Text } from "../components"
 import ChatUsers from "../screens/mock/ChatUsers"
 import ChatScreen from "../screens/ChatScreen"
+import { colors } from "../theme"
 
 export type AppStackParamList = {
   Welcome: undefined
@@ -48,12 +49,30 @@ const AppStack = observer(function AppStack() {
   return (
     <Stack.Navigator
       screenOptions={{}}
-      // initialRouteName={isAuthenticated ? "HomeScreen" : "PreLogin"} // @demo remove-current-line
-      initialRouteName={"ChatUsers"}
+      initialRouteName={isAuthenticated ? "HomeScreen" : "PreLogin"} // @demo remove-current-line
+      // initialRouteName={"ChatUsers"}
     >
       {/* {isAuthenticated ? ( */}
       <React.Fragment>
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            title: "Hello, Abrar",
+            headerLeft: () => (
+              <Image
+                source={require("../../assets/images/account.png")}
+                style={{ width: 35, height: 35, tintColor: colors.blue, marginRight: 20 }}
+              />
+            ),
+            headerRight: () => (
+              <Image
+                source={require("../../assets/images/frame.png")}
+                style={{ width: 35, height: 35, tintColor: colors.blue, marginRight: 20 }}
+              />
+            ),
+          }}
+        />
         <Stack.Screen
           name="ChatUsers"
           component={ChatUsers}
