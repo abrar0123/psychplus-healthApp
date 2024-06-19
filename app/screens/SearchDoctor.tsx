@@ -3,6 +3,7 @@ import {
   FlatList,
   Image,
   Platform,
+  Pressable,
   StatusBar,
   StyleSheet,
   TouchableOpacity,
@@ -10,15 +11,28 @@ import {
 } from "react-native"
 import { SearchDoctors, Text } from "../components"
 import { doctors } from "../utils/doctorsData"
+import { colors } from "../theme"
+import { AppModel } from "../components/AppModel"
 
 export const SearchDoctor = () => {
   const [searchDoctor, setSerchDoctor] = useState("")
+  const [isdisplay, setIsDisplay] = useState<Boolean>(false)
+
   const [filterdDoctor, setFilteredDoctor] = useState<any>("")
 
   const filterDoctor = () => {
     const filter = doctors.filter((item) =>
       item.name.toUpperCase().includes(searchDoctor.toUpperCase()),
     )
+    setFilteredDoctor(filter)
+  }
+  const ascendingDoctor = () => {
+    const filter = doctors?.sort((a: any, b: any) => {
+      if (a && b) {
+        return a.fee - b.fee
+      }
+      return 0
+    })
     setFilteredDoctor(filter)
   }
   useEffect(() => {
@@ -38,7 +52,10 @@ export const SearchDoctor = () => {
         />
         <View>
           <Text preset="bold" text={item?.name} />
-          <Text text={`random text ${item?.name}`} />
+          <View style={styles.flexStyle}>
+            <Text preset="bold" text={`$${item.fee}`} />
+            <Text text={`$${item.category}`} />
+          </View>
         </View>
       </TouchableOpacity>
     )
@@ -56,12 +73,19 @@ export const SearchDoctor = () => {
         }}
       >
         <Text style={styles.mainTitle} text="Top Therapist" preset="subheading" />
-        <Text
-          style={{ ...styles.mainTitle, borderBottomColor: "white", width: "17%" }}
-          text="See All"
-          preset="subheading"
-        />
+        <TouchableOpacity activeOpacity={0.7} onPress={() => setIsDisplay(true)}>
+          <Text
+            style={{ ...styles.mainTitle, borderBottomColor: "white", width: "100%" }}
+            text="Sort"
+            preset="subheading"
+          />
+        </TouchableOpacity>
       </View>
+      <AppModel
+        isdisplay={isdisplay}
+        ascendingDoctor={ascendingDoctor}
+        setIsDisplay={setIsDisplay}
+      />
       <FlatList data={filterdDoctor.length > 0 ? filterdDoctor : doctors} renderItem={renderList} />
     </View>
   )
@@ -71,6 +95,8 @@ const styles = StyleSheet.create({
   main: {
     flex: 1,
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    backgroundColor: colors.palette.neutral100,
+
     paddingHorizontal: 10,
   },
   mainTitle: {
@@ -86,16 +112,25 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 3,
-    marginVertical: 3,
+    marginVertical: 4,
     padding: 10,
-    borderRadius: 3,
-    paddingVertical: 15,
+    borderRadius: 7,
+    paddingVertical: 12,
     shadowOpacity: 0.1,
     shadowColor: "grey",
     elevation: 15,
     // borderWidth: 1,
     // borderColor: "gold",
-
-    backgroundColor: "white",
+    backgroundColor: colors.blue100,
+  },
+  flexStyle: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 40,
+    marginTop: 7,
+    // width: "70%",
+    // backgroundColor: "red",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 })
