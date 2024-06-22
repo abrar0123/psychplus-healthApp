@@ -9,15 +9,15 @@ import {
 } from "react-native"
 import { Text } from "../components"
 import { io } from "socket.io-client"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 const ChatScreen = ({ route }) => {
   const { name } = route.params.data
   const [buid, setBuid] = useState("")
-  const [otherUsers, setOtherUsers] = useState([])
+  const [otherUsers, setOtherUsers] = useState<any>([])
 
   // const socket = io("http://192.168.250.154:5566/") // just connect backend socket port
-  const socket = io("http://192.168.18.76:5566/") // just connect backend socket port
+  const socket = io("http://192.168.191.154:5566/") // just connect backend socket port
 
   const [messages, setMessages] = useState([{}])
   const [inputText, setInputText] = useState("")
@@ -31,8 +31,6 @@ const ChatScreen = ({ route }) => {
     </View>
   )
 
-  console.log("messages : ", messages)
-
   useEffect(() => {
     console.log("render ")
 
@@ -44,25 +42,40 @@ const ChatScreen = ({ route }) => {
     })
 
     socket.on("OtherUsers", (users) => {
-      // console.log("otherusers", users)
-      setOtherUsers(users)
+      const ss = Object.entries(users).map(([v1, v2]) => ({ user: v1, id: v2 }))
+      setOtherUsers(ss)
     })
 
-    socket.on("otherchat", (data) => {
-      console.log("other User chat : ", data)
-    })
+    // socket.on("otherchat", (data) => {
+    //   console.log("other User chat : ", data)
+    // })
 
     const registerUser = () => {
       try {
         const data = { sid: socket.id, name }
-
+        // p1
         socket.emit("register", data, (res) => {
-          setBuid(res.uid)
+          setBuid("res")
         })
       } catch (error) {}
     }
     registerUser()
+
+    // p2
   }, [])
+  const myuser = useMemo(() => {
+    const idd = otherUsers?.filter((item) => item.id !== buid)
+    return idd
+  }, [otherUsers, buid])
+  // useEffect(() => {
+  //   const filterdata = () => {
+  //     const idd = otherUsers?.filter((item) => item.id !== buid)
+  //     console.log("iddd >>>>>  \n :::  ", idd)
+  //     setOtherUsers(idd)
+  //   }
+  //   filterdata()
+  // }, [])
+  console.log("otherUsers", myuser)
 
   const handlePress = async () => {
     try {
@@ -96,6 +109,11 @@ const ChatScreen = ({ route }) => {
         />
         {messages.map((e) => (
           <Text text={`A :${e.chat}`} />
+        ))}
+        {myuser.map((e) => (
+          <TouchableOpacity onPress={() => setOtherSocketId(e.id)}>
+            <Text text={`A :${e.id}`} />
+          </TouchableOpacity>
         ))}
         <FlatList
           data={messages}
