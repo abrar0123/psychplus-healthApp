@@ -25,6 +25,7 @@ import ChatUsers from "../screens/mock/ChatUsers"
 import ChatScreen from "../screens/ChatScreen"
 import { colors } from "../theme"
 import { SearchDoctor } from "../screens/SearchDoctor"
+import { VideoScreen } from "../screens/VideoScreen"
 
 export type AppStackParamList = {
   Welcome: undefined
@@ -97,6 +98,8 @@ const AppStack = observer(function AppStack() {
           }}
         />
         <Stack.Screen name="Chat" component={ChatScreen} />
+        <Stack.Screen name="VideoCall" component={VideoScreen} />
+
         <Stack.Screen
           name="SearchDoctor"
           options={{ headerShown: false }}
