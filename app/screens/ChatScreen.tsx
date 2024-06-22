@@ -55,7 +55,7 @@ const ChatScreen = ({ route }) => {
         const data = { sid: socket.id, name }
         // p1
         socket.emit("register", data, (res) => {
-          setBuid("res")
+          setBuid(res)
         })
       } catch (error) {}
     }
@@ -64,6 +64,8 @@ const ChatScreen = ({ route }) => {
     // p2
   }, [])
   const myuser = useMemo(() => {
+    console.log("buid >>> ", buid)
+
     const idd = otherUsers?.filter((item) => item.id !== buid)
     return idd
   }, [otherUsers, buid])
